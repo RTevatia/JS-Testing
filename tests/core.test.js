@@ -1,4 +1,4 @@
-import { it, expect, describe } from 'vitest'
+import { it, expect, describe, beforeEach, beforeAll, afterEach, afterAll } from 'vitest'
 import { calculateDiscount, canDrive, fetchData, getCoupons, isPriceInRange, isValidUsername, validateUserInput } from '../src/core'
 
 describe('getCoupons', () => {
@@ -157,5 +157,32 @@ describe('fetchData', () => {
             expect(error).toHaveProperty('reason');
             expect(error.reason).toMatch(/fail/i);
         }
+    });
+})
+
+
+describe('test suite', () => {
+    beforeEach(() => {
+        console.log('beforeEach called')
+    });
+
+    beforeAll(() => {
+        console.log('beforeAll called')
+    });
+
+    afterEach(() => {
+        console.log('afterEach called')
+    });
+
+    afterAll(() => {
+        console.log('afterAll called')
+    });
+    
+    it('test case 1', () => {
+        console.log('Test case 1 executed')  
+    });
+
+    it('test case 1', () => {
+        console.log('Test case 2 executed')
     });
 })
