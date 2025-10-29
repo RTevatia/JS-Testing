@@ -1,5 +1,5 @@
 import { it, expect, describe } from 'vitest'
-import { calculateDiscount, canDrive, getCoupons, isPriceInRange, isValidUsername, validateUserInput } from '../src/core'
+import { calculateDiscount, canDrive, fetchData, getCoupons, isPriceInRange, isValidUsername, validateUserInput } from '../src/core'
 
 describe('getCoupons', () => {
     it('should return an array of coupons', () => {
@@ -144,5 +144,18 @@ describe('canDrive', () => {
 
     it('should return error for invalid country code', () => {
         expect(canDrive(20, 'FR')).toMatch(/invalid/i);
+    });
+})
+
+
+describe('fetchData', () => {
+    it('should return a promise that will resolve to an array of numbers', 
+        async () => {
+        try {
+            const result = await fetchData();   
+        } catch (error) {
+            expect(error).toHaveProperty('reason');
+            expect(error.reason).toMatch(/fail/i);
+        }
     });
 })
