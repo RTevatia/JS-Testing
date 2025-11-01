@@ -1,6 +1,7 @@
 import { vi, it, expect, describe, beforeEach } from "vitest";
 import { getPriceInCurrency, getShippingInfo, renderPage, signUp, 
-    submitOrder, login } from "../src/mocking";
+    submitOrder, login, 
+    isOnline} from "../src/mocking";
 import { getExchangeRate } from "../src/libs/currency";
 import { getShippingQuote } from "../src/libs/shipping";
 import { trackPageView } from "../src/libs/analytics";
@@ -154,4 +155,28 @@ describe('login', () => {
         const securityCode = spy.mock.results[0].value.toString();
         expect(sendEmail).toHaveBeenCalledWith(email, securityCode);
     });
+})
+
+
+describe('isOnline', () => {
+    it('should return false if current hour is outside opening hours', () => {
+        // Test just before opening hours
+        vi.setSystemTime('2024-01-01 07:59');
+        expect(isOnline()).toBe(false);
+
+        // Test just after closing hours
+        vi.setSystemTime('2024-01-01 20:01');
+        expect(isOnline()).toBe(false);
+        
+    });
+    
+    it('should return true if current hours is within opening hours', () => {
+        // Test just after opening hours
+        vi.setSystemTime('2024-01-01 08:01');
+        expect(isOnline()).toBe(true);
+    
+        // Test just before closing hours
+        vi.setSystemTime('2024-01-01 19:59');
+        expect(isOnline()).toBe(true);
+    })
 })
